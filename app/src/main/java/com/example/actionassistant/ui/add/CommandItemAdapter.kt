@@ -1,8 +1,7 @@
-package com.example.actionassistant
+package com.example.actionassistant.ui.add
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.actionassistant.databinding.ItemAddActionBinding
 import com.example.actionassistant.module.Command

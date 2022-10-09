@@ -2,6 +2,7 @@ package com.example.actionassistant.dialog
 
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,12 @@ import com.example.actionassistant.module.Command
 
 class AddDialog : DialogFragment() {
 
+    val TAG = javaClass.simpleName
     lateinit var binding: DialogAddBinding
     private var mOnPosClick: ((Command) -> Unit)? =null
     private var pkgName = "com."
-    private var node = ""
+    private var node = "null"
+    private var position = Point()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,17 +53,20 @@ class AddDialog : DialogFragment() {
         }
         binding.editPgkName.setText(pkgName)
         binding.editNode.setText(node)
+        binding.editX.setText(position.x.toString())
+        binding.editY.setText(position.y.toString())
     }
 
     private fun createCommand(): Command {
         val pkgName = binding.editPgkName.text?.toString()
         val node = binding.editNode.text.toString()
-        val x = binding.editX.text?.toString()?.toInt()?:0
-        val y = binding.editY.text?.toString()?.toInt()?:0
+        val x = binding.editX.text.toString()
+        val y = binding.editY.text.toString()
         val command = Command().apply {
             this.pkgName = pkgName?:""
             this.nodeName = node
-            this.position = Point(x?:0,y?:0)
+            this.position = Point(x.toInt(),y.toInt())
+            Log.e(TAG, "createCommand: point = ${this.position}", )
         }
         return command
     }
@@ -73,5 +79,9 @@ class AddDialog : DialogFragment() {
     }
     fun setNode(node:String){
         this.node = node
+    }
+
+    fun setPosition(point: Point){
+        this.position = point
     }
 }

@@ -1,18 +1,15 @@
-package com.example.actionassistant
+package com.example.actionassistant.ui.add
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.actionassistant.R
 import com.example.actionassistant.databinding.ActivityAddBinding
-import com.example.actionassistant.databinding.ItemAddActionBinding
 import com.example.actionassistant.dialog.AddDialog
 import com.example.actionassistant.module.Command
 import com.google.gson.Gson
@@ -30,7 +27,7 @@ class AddActivity : AppCompatActivity() {
             val dialog = AddDialog()
             dialog.setOnPosClickListener {
                 list.add(it)
-                mAdapter.notifyItemChanged(commands.size-1)
+                mAdapter.notifyDataSetChanged()
             }
             dialog.show(supportFragmentManager,"")
         }
@@ -49,6 +46,7 @@ class AddActivity : AppCompatActivity() {
             dialog.setPkgName(list[position].pkgName)
             dialog.setNode(list[position].nodeName)
             dialog.show(supportFragmentManager,"")
+            dialog.setPosition(list[position].position)
         }
         mAdapter.onDeleteClick = {
             list.removeAt(it)
