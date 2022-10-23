@@ -8,7 +8,7 @@ import com.example.actionassistant.module.Command
 
 class CommandItemAdapter : RecyclerView.Adapter<CommandItemAdapter.CommandViewHolder>() {
 
-    var list = mutableListOf<Command>()
+    var list:List<Command> = mutableListOf<Command>()
     var onItemClick :(Int)->Unit= { }
     var onDeleteClick :(Int)->Unit= { }
     class CommandViewHolder(val binding: ItemAddActionBinding) :

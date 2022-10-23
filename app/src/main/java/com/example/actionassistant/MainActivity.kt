@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.navigation.Navigation
 import com.example.actionassistant.base.BaseActivity
 import com.example.actionassistant.databinding.ActivityMainBinding
 import com.example.actionassistant.module.Command
@@ -21,7 +23,12 @@ import com.google.gson.reflect.TypeToken
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-    val TAG = javaClass.simpleName
+    private val TAG = javaClass.simpleName
+    private val navController by lazy {
+        Navigation.findNavController(this,R.id.fragment_container)
+    }
+
+    private val viewModel:MainViewModel by viewModels()
 
     private val serviceIntent by lazy {
         Intent(this, ActionService::class.java)
@@ -29,21 +36,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        initData()
-    }
-
-    private fun initData() {
-        val sp = getSharedPreferences(SP_COMMAND, Context.MODE_PRIVATE)
-        val string = sp.getString(SP_COMMAND, "")!!
-        if (string.isNotBlank()) {
-            val gson = Gson()
-            val type = object : TypeToken<List<Command>>() {}.type
-            val list: List<Command> = gson.fromJson(string, type)
-            commands.addAll(list)
-            Log.e("TAG", "initData: $list")
+        viewModel.initData()
+        binding.btnHome.setOnClickListener {
+            navController.navigate(R.id.mainFragment)
+        }
+        binding.btnMore.setOnClickListener {
+            navController.navigate(R.id.addFragment)
         }
     }
+
 }
 

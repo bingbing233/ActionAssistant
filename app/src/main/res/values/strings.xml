@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ActionAssistant</string>
+    <string name="home">home</string>
+    <string name="more">more</string>
+    <string name="check_permission">检查无障碍权限</string>
+    <string name="go_settings">跳转到无障碍权限</string>
 </resources>
