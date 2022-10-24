@@ -2,6 +2,7 @@ package com.example.actionassistant.service
 
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Point
 import android.util.Log
@@ -55,6 +56,7 @@ class ActionService : AccessibilityService() {
         time = MainViewModel.getTime()
         Log.e(TAG, "onServiceConnected: command size = ${commands.size} time = $time")
         Toast.makeText(applicationContext, "无障碍服务已连接,command step = ${commands.size} time = $time", Toast.LENGTH_SHORT).show()
+//        openRimet()
     }
 
     override fun onCreate() {
@@ -84,5 +86,24 @@ class ActionService : AccessibilityService() {
     private val format = SimpleDateFormat("HH:mm")
     private fun curTime(): String? {
         return format.format(System.currentTimeMillis())
+    }
+
+    private fun openRimet(){
+        val pkgName = "com.alibaba.android.rimet"
+        val resolveIntent = Intent(Intent.ACTION_MAIN,null).apply {
+            addCategory(Intent.CATEGORY_LAUNCHER)
+            setPackage(pkgName)
+        }
+        val apps = packageManager.queryIntentActivities(resolveIntent,0)
+        val resolve = apps.iterator().next()
+        if(resolve!=null){
+            val className = resolve.activityInfo.name
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.addCategory(Intent.CATEGORY_LAUNCHER)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val cn = ComponentName(pkgName,className)
+            intent.component = cn
+            startActivity(intent)
+        }
     }
 }
