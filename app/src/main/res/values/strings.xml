@@ -4,4 +4,6 @@
     <string name="more">more</string>
     <string name="check_permission">检查无障碍权限</string>
     <string name="go_settings">跳转到无障碍权限</string>
+    <string name="start_service">启动服务</string>
+    <string name="root">获取root</string>
 </resources>

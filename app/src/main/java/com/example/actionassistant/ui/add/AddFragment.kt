@@ -37,6 +37,7 @@ class AddFragment : BaseFragment<FragmentAddBinding>(FragmentAddBinding::inflate
                 setPosition(command.position)
                 setOnPosClickListener {
                     viewModel.updateCommandAt(index,it)
+                    mAdapter.notifyDataSetChanged()
                 }
             }
             dialog.show(parentFragmentManager,null)

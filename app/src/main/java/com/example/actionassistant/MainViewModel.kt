@@ -1,11 +1,12 @@
 package com.example.actionassistant
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.actionassistant.module.Command
-import com.example.actionassistant.ui.add.SP_COMMAND
+import com.example.actionassistant.utils.AdbUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     companion object {
         const val SP_COMMAND = "command"
-        fun initAllData(): List<Command> {
+        const val SP_TIME = "time"
+        fun getCommands(): List<Command> {
             val sp = MyApp.getAppContext().getSharedPreferences(SP_COMMAND, Context.MODE_PRIVATE)
             val string = sp.getString(SP_COMMAND, "")!!
             return if (string.isNotBlank()) {
@@ -26,6 +28,11 @@ class MainViewModel : ViewModel() {
             }else{
                 emptyList()
             }
+        }
+
+        fun getTime(): String {
+            val sp = MyApp.getAppContext().getSharedPreferences(SP_TIME, Context.MODE_PRIVATE)
+            return sp.getString(SP_TIME, "00:00")!!
         }
     }
 
@@ -88,4 +95,15 @@ class MainViewModel : ViewModel() {
         sp.apply()
     }
 
+    //格式：12:30
+    @SuppressLint("SimpleDateFormat")
+    fun saveTime(time:String){
+        val sp = MyApp.getAppContext().getSharedPreferences(SP_TIME,Context.MODE_PRIVATE).edit()
+        sp.putString(SP_TIME,time)
+        sp.apply()
+    }
+
+    fun accessRootPermission(){
+        AdbUtils.exec("")
+    }
 }

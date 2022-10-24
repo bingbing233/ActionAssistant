@@ -55,6 +55,12 @@ class AddDialog : DialogFragment() {
         binding.editNode.setText(node)
         binding.editX.setText(position.x.toString())
         binding.editY.setText(position.y.toString())
+        binding.btnMiuiHome.setOnClickListener {
+            binding.editPgkName.setText("com.miui.home")
+        }
+        binding.btnDingTalk.setOnClickListener {
+            binding.editPgkName.setText("com.alibaba.android.rimet")
+        }
     }
 
     private fun createCommand(): Command {
