@@ -25,6 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
         binding.btnMore.setOnClickListener {
             navController.navigate(R.id.addFragment)
+
         }
     }
 
