@@ -104,6 +104,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun accessRootPermission(){
-        AdbUtils.exec("")
+        AdbUtils.execSuper("")
     }
 }

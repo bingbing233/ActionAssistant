@@ -22,6 +22,8 @@ fun wakeLock(context: Context) {
     )
 }
 
+
+
 //是否点亮屏幕
 fun isScreenOn(context: Context): Boolean {
     val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager

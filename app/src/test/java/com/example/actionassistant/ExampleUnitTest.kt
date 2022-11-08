@@ -12,6 +12,23 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val string = "type:faceswap|code:f6fc940f37db48c7|name:jacky"
+        println( getValueFromOtherMsg("name",string))
+    }
+
+    fun getValueFromOtherMsg(key:String,otherMsg:String): String {
+        val list = otherMsg.split('|')
+        var value = ""
+        var kv = ""
+        list.forEach {
+            if(it.contains(key)){
+                kv = it
+            }
+        }
+
+        if(kv != ""){
+            value = kv.substringAfter(":")
+        }
+        return value
     }
 }

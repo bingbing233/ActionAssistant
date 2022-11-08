@@ -2,6 +2,7 @@ package com.example.actionassistant.ui.add
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.actionassistant.databinding.ItemAddActionBinding
 import com.example.actionassistant.module.Command
@@ -23,7 +24,6 @@ class CommandItemAdapter : RecyclerView.Adapter<CommandItemAdapter.CommandViewHo
         val command = list[position]
         holder.binding.apply {
             tvPkg.text = "Package:${command.pkgName}"
-            tvNode.text = "Node:"+command.nodeName
             tvPos.text = "${command.position}"
             root.setOnClickListener {
                 onItemClick.invoke(position)
@@ -31,6 +31,8 @@ class CommandItemAdapter : RecyclerView.Adapter<CommandItemAdapter.CommandViewHo
             tvDelete.setOnClickListener {
                 onDeleteClick.invoke(position)
             }
+            tvType.text = "事件类型：${Command.getTypeContent(command.type)}"
+            tvPos.isVisible = command.type == Command.TYPE_CLICK
         }
     }
 

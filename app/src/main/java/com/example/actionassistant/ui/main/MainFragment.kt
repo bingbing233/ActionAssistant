@@ -10,6 +10,7 @@ import com.example.actionassistant.MainViewModel
 import com.example.actionassistant.base.BaseFragment
 import com.example.actionassistant.databinding.FragmentMainBinding
 import com.example.actionassistant.service.ActionService
+import com.example.actionassistant.utils.AdbUtils
 import com.example.actionassistant.utils.checkAccessibilityServiceEnable
 import com.example.actionassistant.utils.go2AccessibilitySettings
 import kotlin.math.min
@@ -49,5 +50,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.btnGetRoot.setOnClickListener {
             viewModel.accessRootPermission()
         }
+
     }
 }

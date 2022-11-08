@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
+import com.example.actionassistant.R
 import com.example.actionassistant.databinding.DialogAddBinding
 import com.example.actionassistant.module.Command
 
@@ -52,7 +54,6 @@ class AddDialog : DialogFragment() {
             dismiss()
         }
         binding.editPgkName.setText(pkgName)
-        binding.editNode.setText(node)
         binding.editX.setText(position.x.toString())
         binding.editY.setText(position.y.toString())
         binding.btnMiuiHome.setOnClickListener {
@@ -61,17 +62,37 @@ class AddDialog : DialogFragment() {
         binding.btnDingTalk.setOnClickListener {
             binding.editPgkName.setText("com.alibaba.android.rimet")
         }
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.radio_click -> {
+                    binding.editX.isVisible = true
+                    binding.editY.isVisible = true
+                    binding.tvPosition.isVisible = true
+                }
+
+                R.id.radio_open_app ->{
+                    binding.editX.isVisible = false
+                    binding.editY.isVisible = false
+                    binding.tvPosition.isVisible = false
+                }
+            }
+        }
     }
 
     private fun createCommand(): Command {
         val pkgName = binding.editPgkName.text?.toString()
-        val node = binding.editNode.text.toString()
         val x = binding.editX.text.toString()
         val y = binding.editY.text.toString()
+        val type = when(binding.radioGroup.checkedRadioButtonId){
+            R.id.radio_click -> Command.TYPE_CLICK
+            R.id.radio_open_app -> Command.TYPE_OPEN_APP
+            else -> Command.TYPE_CLICK
+        }
         val command = Command().apply {
             this.pkgName = pkgName?:""
             this.nodeName = node
             this.position = Point(x.toInt(),y.toInt())
+            this.type = type
             Log.e(TAG, "createCommand: point = ${this.position}", )
         }
         return command
