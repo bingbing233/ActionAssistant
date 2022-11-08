@@ -41,7 +41,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.btnStartService.setOnClickListener {
             val h = binding.timePicker.hour
             val m = binding.timePicker.minute
-            val time = "$h:$m"
+            var hText = h.toString()
+            var mText = m.toString()
+            if(m < 10){
+                mText = "0$m"
+            }
+            if(h < 10){
+                hText = "0$h"
+            }
+            val time = "$hText:$mText"
             Toast.makeText(requireContext(), "任务将在 $time 执行", Toast.LENGTH_SHORT).show()
             viewModel.saveTime(time)
             requireActivity().startService(serviceIntent)
