@@ -1,12 +1,10 @@
 package com.example.actionassistant
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.Navigation
 import com.example.actionassistant.base.BaseActivity
 import com.example.actionassistant.databinding.ActivityMainBinding
-import com.example.actionassistant.service.ActionService
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 

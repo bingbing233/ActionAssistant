@@ -36,3 +36,29 @@ fun checkAccessibilityServiceEnable(context: Context): Boolean {
     return accessibilityManager.isEnabled
 }
 
+/**
+ * format hh:mm
+ */
+const val bigger = 0
+const val smaller = 1
+const val equal = 2
+fun compareTime(time1:String,time2:String): Int {
+    val t1 = time1.split(":")
+    val t2 = time2.split(":")
+    val h1 = t1[0].toInt()
+    val m1 = t1[1].toInt()
+    val h2 = t2[0].toInt()
+    val m2 = t2[2].toInt()
+    if(h1 > h2)
+        return bigger
+    if(h1 < h2)
+        return smaller
+    if(h1 == h2){
+        return when{
+            m1 > m2 -> bigger
+            m1 < m2 -> smaller
+            else -> equal
+        }
+    }
+    return -1
+}
