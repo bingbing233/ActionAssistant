@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 
+/**
+ * 有时间限制
+ */
 class ActionWorker(context: Context, workerParameters: WorkerParameters) :
     Worker(context, workerParameters) {
     private val interval = 5000L //每五秒发送一次消息

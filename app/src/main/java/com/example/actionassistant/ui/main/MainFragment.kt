@@ -17,6 +17,8 @@ import com.example.actionassistant.databinding.FragmentMainBinding
 import com.example.actionassistant.service.ActionWorker
 import com.example.actionassistant.service.ActionWorkerByPush
 import com.example.actionassistant.utils.ActionEvent
+import com.example.actionassistant.utils.AdbUtils
+import com.example.actionassistant.utils.Constant
 import com.example.actionassistant.utils.TAG
 import com.example.actionassistant.utils.registerEvent
 import com.example.actionassistant.utils.unregisterEvent
@@ -30,6 +32,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
@@ -72,22 +75,26 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun startWork(){
-        val w = PeriodicWorkRequestBuilder<ActionWorker>(1,TimeUnit.SECONDS)
-            .build()
+        val w = OneTimeWorkRequest.from(ActionWorker::class.java)
         WorkManager.getInstance(requireContext()).enqueue(w)
     }
 
     private fun startPushWork(){
-        val w = PeriodicWorkRequestBuilder<ActionWorkerByPush>(1,TimeUnit.SECONDS)
-            .build()
+        val w = OneTimeWorkRequest.from(ActionWorkerByPush::class.java)
         WorkManager.getInstance(requireContext()).enqueue(w)
+    }
+
+    private fun updateTips(){
+        val format = SimpleDateFormat("mm月dd日 - hh:mm")
+        val text = format.format(System.currentTimeMillis())
+        binding.tvTips?.text = "在 $text 收到消息"
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventArrive(event: ActionEvent){
-        Log.e("binghao", "onEventArrive: 收到消息 start work", )
-        Toast.makeText(requireContext(), "收到消息，开始工作！", Toast.LENGTH_SHORT).show()
+        updateTips()
 //        startPushWork()
+        AdbUtils.openApp(Constant.dingTalk)
     }
 
     private fun push(){

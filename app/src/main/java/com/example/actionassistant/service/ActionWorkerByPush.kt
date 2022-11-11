@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 
+/**
+ * 没有时间限制
+ */
 class ActionWorkerByPush(context: Context, workerParameters: WorkerParameters) :
     Worker(context, workerParameters) {
     private val interval = 5000L //每五秒发送一次消息
@@ -32,14 +35,12 @@ class ActionWorkerByPush(context: Context, workerParameters: WorkerParameters) :
     override fun doWork(): Result {
         runBlocking {
             flow {
-                var curTime = ""
                 while (true) {
                     if (commands.isEmpty() && running) {
                         break
                     }
                     delay(delay)
-                    curTime = curTime()
-                    emit(curTime)
+                    emit(curTime())
                 }
             }.collect {
                 Log.e(TAG, "doWorkByPush: curTime = $it time = $time com = ${commands.size}")

@@ -17,6 +17,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         application = this
+        Log.e("binghao", "app onCreate: ", )
         initJPush()
     }
 
