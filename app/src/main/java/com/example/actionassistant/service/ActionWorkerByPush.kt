@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 
-class ActionWorker(context: Context, workerParameters: WorkerParameters) :
+class ActionWorkerByPush(context: Context, workerParameters: WorkerParameters) :
     Worker(context, workerParameters) {
     private val interval = 5000L //每五秒发送一次消息
     private val delay = 2000L //每个动作之间延迟两秒
@@ -43,7 +43,7 @@ class ActionWorker(context: Context, workerParameters: WorkerParameters) :
                 }
             }.collect {
                 Log.e(TAG, "doWork: curTime = $it time = $time com = ${commands.size}")
-                if (commands.isNotEmpty() && time == curTime()) {
+                if (commands.isNotEmpty()) {
                     val command = commands.first()
                     when (command.type) {
                         Command.TYPE_CLICK -> {

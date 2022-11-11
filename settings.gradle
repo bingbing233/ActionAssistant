@@ -3,6 +3,13 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        // hms
+        maven {
+            allowInsecureProtocol = true
+            url 'http://developer.huawei.com/repo/'
+        }
+        // fcm
+        maven { url "https://maven.google.com" }
     }
 }
 dependencyResolutionManagement {
@@ -11,6 +18,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
 }
+
 rootProject.name = "ActionAssistant"
 include ':app'

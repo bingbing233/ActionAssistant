@@ -15,9 +15,19 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.example.actionassistant",
+                JPUSH_APPKEY : "7950077e6cd2c0a3a42009fa", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
+
 
     buildTypes {
         release {
@@ -52,4 +62,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     //work manager
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    //JPush
+    implementation 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
+
+    implementation("org.greenrobot:eventbus:3.3.1")
 }

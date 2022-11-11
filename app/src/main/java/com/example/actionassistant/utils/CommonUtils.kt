@@ -6,7 +6,9 @@ import android.content.Intent
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.accessibility.AccessibilityManager
+import org.greenrobot.eventbus.EventBus
 
+const val TAG = "binghao"
 
 fun go2AccessibilitySettings(activity: Activity) {
     val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
@@ -61,4 +63,16 @@ fun compareTime(time1:String,time2:String): Int {
         }
     }
     return -1
+}
+
+fun registerEvent(obj:Any){
+    EventBus.getDefault().register(obj)
+}
+
+fun unregisterEvent(obj: Any){
+    EventBus.getDefault().unregister(obj)
+}
+
+fun postEvent(obj: Any){
+    EventBus.getDefault().post(obj)
 }
