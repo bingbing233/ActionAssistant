@@ -1,6 +1,7 @@
 package com.example.actionassistant.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ abstract class BaseFragment <VB:ViewBinding>(private val block: (LayoutInflater)
 
     private lateinit var _binding:VB
     val binding get() = _binding
-
+    val TAG = javaClass.simpleName
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,5 +25,21 @@ abstract class BaseFragment <VB:ViewBinding>(private val block: (LayoutInflater)
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.e(TAG, "onDestroy: ", )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.e(TAG, "onCreate: ", )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.e(TAG, "onViewCreated: ", )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.e(TAG, "onDestroyView: ", )
     }
 }

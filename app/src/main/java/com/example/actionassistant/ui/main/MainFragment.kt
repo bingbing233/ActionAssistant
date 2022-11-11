@@ -2,6 +2,7 @@ package com.example.actionassistant.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,10 +17,19 @@ import com.example.actionassistant.databinding.FragmentMainBinding
 import com.example.actionassistant.service.ActionWorker
 import com.example.actionassistant.service.ActionWorkerByPush
 import com.example.actionassistant.utils.ActionEvent
+import com.example.actionassistant.utils.TAG
 import com.example.actionassistant.utils.registerEvent
 import com.example.actionassistant.utils.unregisterEvent
+import okhttp3.Headers
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.internal.http2.Header
+import okhttp3.internal.platform.Platform
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
@@ -27,18 +37,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     private val viewModel:MainViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        registerEvent(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         unregisterEvent(this)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        registerEvent(this)
         binding.timePicker.setOnTimeChangedListener { _, _, _ ->
             val h = binding.timePicker.hour
             val m = binding.timePicker.minute
@@ -82,6 +87,24 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     fun onEventArrive(event: ActionEvent){
         Log.e("binghao", "onEventArrive: 收到消息 start work", )
         Toast.makeText(requireContext(), "收到消息，开始工作！", Toast.LENGTH_SHORT).show()
-        startPushWork()
+//        startPushWork()
+    }
+
+    private fun push(){
+        val url = URL("https://api.jpush.cn/v3/push")
+       val client = OkHttpClient()
+        val kv = "7950077e6cd2c0a3a42009fa:80fedd71dd072f56aa9b195a " //appKey:masterSecret
+        val author = Base64.decode(kv,Base64.DEFAULT).contentToString()
+        val request = Request.Builder()
+            .header("Authorization","Basic $author")
+            .url(url)
+            .build()
+        val respond = client.newCall(request).execute()
+        Log.e(TAG, "push: ${respond.message}", )
+
+    }
+
+    private fun base64(text:String):String{
+        return Base64.decode(text,Base64.DEFAULT).contentToString()
     }
 }

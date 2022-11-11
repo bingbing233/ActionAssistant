@@ -68,4 +68,5 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
 
     implementation("org.greenrobot:eventbus:3.3.1")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }

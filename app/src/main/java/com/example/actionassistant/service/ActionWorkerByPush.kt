@@ -42,7 +42,7 @@ class ActionWorkerByPush(context: Context, workerParameters: WorkerParameters) :
                     emit(curTime)
                 }
             }.collect {
-                Log.e(TAG, "doWork: curTime = $it time = $time com = ${commands.size}")
+                Log.e(TAG, "doWorkByPush: curTime = $it time = $time com = ${commands.size}")
                 if (commands.isNotEmpty()) {
                     val command = commands.first()
                     when (command.type) {
